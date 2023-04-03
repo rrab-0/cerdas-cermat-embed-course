@@ -4,17 +4,19 @@ SevSeg sevseg;
 
 // basically the score of each team
 int startnumberA = 0;
-int startnumberB = 100;
+int startnumberB = 5;
 int startnumberC = 100;
 
 // Input
 int button = A5;
+int buttonB = A0;
 bool pressed = false;
 
 void setup()
 {
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
+  pinMode(buttonB, INPUT_PULLUP);
 
   // setup for SevSeg.h
   byte numDigits = 3;
@@ -51,6 +53,29 @@ void juriNambah(int score)
   }
   Serial.println(score);
   return score;
+}
+
+void juriNambahKurangA(int mathA)
+{
+  if (mathA == 1)
+  {
+    if (startnumberA < 100)
+    {
+      sevseg.setNumber(startnumberA);
+      sevseg.refreshDisplay();
+      startnumberA += 2;
+    }
+    if (startnumberA == 100)
+    {
+      startnumberA = 0;
+    }
+  }
+  else if (mathA == 2)
+  {
+    sevseg.setNumber(startnumberA);
+    sevseg.refreshDisplay();
+    startnumberA -= 2;
+  }
 }
 
 void juriNambahA()
@@ -129,7 +154,7 @@ void displayTimA()
 void displayTimB()
 {
   char bufferB[5];
-  char teamB[] = "a";
+  char teamB[] = "b";
   sprintf(bufferB, "%s%d", teamB, startnumberB);
   sevseg.setChars(bufferB);
   sevseg.refreshDisplay();
@@ -149,32 +174,66 @@ unsigned long previousTime = 0;
 
 void loop()
 {
+  bool timA_State = true;
+  bool timB_State = true;
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
-  bool standByState = false;
-  if (standByState == false)
-  {
-    standBy();
-  }
-  else if (state == pressed )
-    {
-      // displayTimA();
-      while (digitalRead(button) == pressed)
-      {
-        // do nothing
-      }
-    }
-  // // if pressed would do +2
-  // if (state == pressed)
+  bool stateB = digitalRead(buttonB);
+  // if (standByState == false)
   // {
-  //   juriNambahA();
-  //   juriNgurangB();
-  //   Serial.println(startnumberA);
-  //   Serial.println(startnumberB);
-  //   // Serial.println(score);
-  //   while (digitalRead(button) == pressed)
-  //   {
-  //     // do nothing
-  //   }
+  //   standBy();
   // }
+  // else if (state == pressed )
+  //   {
+  //     // displayTimA();
+  //     while (digitalRead(button) == pressed)
+  //     {
+  //       // do nothing
+  //     }
+  //   }
+
+  if (state == pressed)
+  {
+    timB_State = false;
+    while (timA_State == true)
+    {
+      Serial.println("A");
+      if (digitalRead(buttonB) == pressed)
+      {
+        timA_State = false;
+        while (digitalRead(buttonB) == pressed)
+        {
+          // do nothing
+        }
+        break;
+      }
+      displayTimA();
+    }
+    while (digitalRead(button) == pressed)
+    {
+      // do nothing
+    }
+  }
+
+  if (stateB == pressed)
+  {
+    timA_State = false;
+    while (timB_State == true)
+    {
+      Serial.println("B");
+      if (digitalRead(button) == pressed)
+      {
+        timB_State = false;
+        while (digitalRead(button) == pressed)
+        {
+          // do nothing
+        }
+      }
+      displayTimB();
+    }
+    while (digitalRead(buttonB) == pressed)
+    {
+      // do nothing
+    }
+  }
 }
