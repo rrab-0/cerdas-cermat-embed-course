@@ -8,24 +8,8 @@ int startnumberB = 100;
 int startnumberC = 100;
 
 // Input
-// const int KelA = A0;
-// const int KelB = A1;
-// const int KelC = A2;
-// const int add = A3;
-// const int sub = A4;
 int button = A5;
 bool pressed = false;
-
-// // Variable
-// int x = 0;
-// int y = 0;
-// int valueKelA = 0;
-// int valueKelB = 0;
-// int valueKelC = 0;
-
-// volatile bool stateKelA;
-// volatile bool stateKelB;
-// volatile bool stateKelC;
 
 void setup()
 {
@@ -167,19 +151,30 @@ void loop()
 {
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
-  standBy();
-  // displayTimA();
-  // if pressed would do +2
-  if (state == pressed)
+  bool standByState = false;
+  if (standByState == false)
   {
-    juriNambahA();
-    juriNgurangB();
-    Serial.println(startnumberA);
-    Serial.println(startnumberB);
-    // Serial.println(score);
-    while (digitalRead(button) == pressed)
-    {
-      // do nothing
-    }
+    standBy();
   }
+  else if (state == pressed )
+    {
+      // displayTimA();
+      while (digitalRead(button) == pressed)
+      {
+        // do nothing
+      }
+    }
+  // // if pressed would do +2
+  // if (state == pressed)
+  // {
+  //   juriNambahA();
+  //   juriNgurangB();
+  //   Serial.println(startnumberA);
+  //   Serial.println(startnumberB);
+  //   // Serial.println(score);
+  //   while (digitalRead(button) == pressed)
+  //   {
+  //     // do nothing
+  //   }
+  // }
 }
