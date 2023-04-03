@@ -10,13 +10,19 @@ int startnumberC = 100;
 // Input
 int button = A5;
 int buttonB = A0;
+int buttontambah = A1;
+int buttonkurang = A2;
 bool pressed = false;
+
+int tim = 0;
 
 void setup()
 {
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
   pinMode(buttonB, INPUT_PULLUP);
+  pinMode(buttontambah, INPUT_PULLUP);
+  pinMode(buttonkurang, INPUT_PULLUP);
 
   // setup for SevSeg.h
   byte numDigits = 3;
@@ -68,7 +74,38 @@ void juriNambah(int tim)
   }
 }
 
-void juriNambahKurangA(int mathA)
+void juriNgurang(int tim)
+{
+  int initialScore = 0;
+  // +2 until score is 100
+  if (initialScore < 100)
+  {
+    sevseg.setNumber(initialScore);
+    sevseg.refreshDisplay();
+    initialScore += 2;
+  }
+  // reset initialScore if initialScore = 100
+  if (initialScore == 0)
+  {
+    initialScore = 0;
+  }
+
+  // check which team juri is adding
+  if (tim == 1)
+  {
+    startnumberA -= initialScore;
+  }
+  else if (tim == 2)
+  {
+    startnumberB -= initialScore;
+  }
+  else if (tim == 3)
+  {
+    startnumberC -= initialScore;
+  }
+}
+
+void juriNambahKurangA(int mathA, int tim)
 {
   if (mathA == 1)
   {
@@ -81,15 +118,17 @@ void juriNambahKurangA(int mathA)
     if (startnumberA == 100)
     {
       startnumberA = 0;
+      }
     }
-  }
-  else if (mathA == 2)
-  {
-    sevseg.setNumber(startnumberA);
-    sevseg.refreshDisplay();
-    startnumberA -= 2;
-  }
-}
+    else if (mathA == 2)
+    {
+      sevseg.setNumber(startnumberA);
+      sevseg.refreshDisplay();
+      startnumberA -= 2;
+    }
+  }  
+}  
+  
 
 // void juriNambahA()
 // {
@@ -220,6 +259,8 @@ void loop()
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
   bool stateB = digitalRead(buttonB);
+  bool statetambah = digitalRead(buttontambah);
+  bool statekurang = digitalRead(buttonkurang);
   // if (standByState == false)
   // {
   //   standBy();
@@ -232,14 +273,26 @@ void loop()
   //       // do nothing
   //     }
   //   }
+  int tim = 0;
 
   if (state == pressed)
   {
     timB_State = false;
     while (timA_State == true)
     {
+      tim=1;
       displayTeam("A");
       Serial.println("A");
+
+      if(statetambah == true)
+      {
+        juriNambah(int tim);
+      }
+      else if(statekurang == true)
+      {
+        juriNgurang(int tim);
+      }
+
       if (digitalRead(buttonB) == pressed)
       {
         timA_State = false;
@@ -258,11 +311,22 @@ void loop()
 
   if (stateB == pressed)
   {
+    tim=2;
     timA_State = false;
     while (timB_State == true)
     {
       displayTeam("B");
       Serial.println("B");
+
+      if(statetambah == true)
+      {
+        juriNambah(int tim);
+      }
+      else if(statekurang == true)
+      {
+        juriNgurang(int tim);
+      }
+      
       if (digitalRead(button) == pressed)
       {
         timB_State = false;
