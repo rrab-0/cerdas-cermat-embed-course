@@ -2,7 +2,7 @@
 
 SevSeg sevseg;
 
-// basically the score of team
+// basically the score of each team
 int startnumberA = 0;
 int startnumberB = 100;
 int startnumberC = 100;
@@ -16,22 +16,23 @@ int startnumberC = 100;
 int button = A5;
 bool pressed = false;
 
-// Variable
-int x = 0;
-int y = 0;
-int valueKelA = 0;
-int valueKelB = 0;
-int valueKelC = 0;
+// // Variable
+// int x = 0;
+// int y = 0;
+// int valueKelA = 0;
+// int valueKelB = 0;
+// int valueKelC = 0;
 
-volatile bool stateKelA;
-volatile bool stateKelB;
-volatile bool stateKelC;
+// volatile bool stateKelA;
+// volatile bool stateKelB;
+// volatile bool stateKelC;
 
 void setup()
 {
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
-  // put your setup code here, to run once:
+
+  // setup for SevSeg.h
   byte numDigits = 3;
   byte digitPins[] = {4, 3, 2};
   byte segmentPins[] = {7, 8, 9, 10, 11, 12, 13};
@@ -166,21 +167,19 @@ void loop()
 {
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
-  // standBy();
-  displayTimA();
+  standBy();
+  // displayTimA();
   // if pressed would do +2
   if (state == pressed)
   {
     juriNambahA();
+    juriNgurangB();
     Serial.println(startnumberA);
+    Serial.println(startnumberB);
     // Serial.println(score);
-    // juriNambahA();
-    // juriNgurangB();
     while (digitalRead(button) == pressed)
     {
       // do nothing
     }
-    // Serial.println(startnumberA);
-    // Serial.println(startnumberB);
   }
 }
