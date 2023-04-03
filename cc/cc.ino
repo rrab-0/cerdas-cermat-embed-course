@@ -91,95 +91,123 @@ void juriNambahKurangA(int mathA)
   }
 }
 
-void juriNambahA()
-{
-  if (startnumberA < 100)
-  {
-    sevseg.setNumber(startnumberA);
-    sevseg.refreshDisplay();
-    startnumberA += 2;
-  }
-  if (startnumberA == 100)
-  {
-    startnumberA = 0;
-  }
-}
+// void juriNambahA()
+// {
+//   if (startnumberA < 100)
+//   {
+//     sevseg.setNumber(startnumberA);
+//     sevseg.refreshDisplay();
+//     startnumberA += 2;
+//   }
+//   if (startnumberA == 100)
+//   {
+//     startnumberA = 0;
+//   }
+// }
 
-void juriNgurangA()
-{
-  sevseg.setNumber(startnumberA);
-  sevseg.refreshDisplay();
-  startnumberA -= 2;
-}
+// void juriNgurangA()
+// {
+//   sevseg.setNumber(startnumberA);
+//   sevseg.refreshDisplay();
+//   startnumberA -= 2;
+// }
 
-void juriNambahB()
-{
-  if (startnumberB < 100)
-  {
-    sevseg.setNumber(startnumberB);
-    sevseg.refreshDisplay();
-    startnumberB += 2;
-  }
-  if (startnumberB == 100)
-  {
-    startnumberB = 0;
-  }
-}
+// void juriNambahB()
+// {
+//   if (startnumberB < 100)
+//   {
+//     sevseg.setNumber(startnumberB);
+//     sevseg.refreshDisplay();
+//     startnumberB += 2;
+//   }
+//   if (startnumberB == 100)
+//   {
+//     startnumberB = 0;
+//   }
+// }
 
-void juriNgurangB()
-{
-  // sevseg.setNumber(startnumberB);
-  // sevseg.refreshDisplay();
-  startnumberB -= 2;
-}
+// void juriNgurangB()
+// {
+//   // sevseg.setNumber(startnumberB);
+//   // sevseg.refreshDisplay();
+//   startnumberB -= 2;
+// }
 
-void juriNambahC()
-{
-  if (startnumberC < 100)
-  {
-    sevseg.setNumber(startnumberC);
-    sevseg.refreshDisplay();
-    startnumberC += 2;
-  }
-  if (startnumberC == 100)
-  {
-    startnumberC = 0;
-  }
-}
+// void juriNambahC()
+// {
+//   if (startnumberC < 100)
+//   {
+//     sevseg.setNumber(startnumberC);
+//     sevseg.refreshDisplay();
+//     startnumberC += 2;
+//   }
+//   if (startnumberC == 100)
+//   {
+//     startnumberC = 0;
+//   }
+// }
 
-void juriNgurangC()
-{
-  // sevseg.setNumber(startnumberC);
-  // sevseg.refreshDisplay();
-  startnumberC -= 2;
-}
+// void juriNgurangC()
+// {
+//   // sevseg.setNumber(startnumberC);
+//   // sevseg.refreshDisplay();
+//   startnumberC -= 2;
+// }
 
 // displays team and the current score they have
-void displayTimA()
-{
-  char buffer[5];
-  char teamA[] = "a";
-  sprintf(buffer, "%s%d", teamA, startnumberA);
-  sevseg.setChars(buffer);
-  sevseg.refreshDisplay();
-}
+// void displayTimA()
+// {
+//   char buffer[5];
+//   char teamA[] = "a";
+//   sprintf(buffer, "%s%d", teamA, startnumberA);
+//   sevseg.setChars(buffer);
+//   sevseg.refreshDisplay();
+// }
 
-void displayTimB()
-{
-  char bufferB[5];
-  char teamB[] = "b";
-  sprintf(bufferB, "%s%d", teamB, startnumberB);
-  sevseg.setChars(bufferB);
-  sevseg.refreshDisplay();
-}
+// void displayTimB()
+// {
+//   char bufferB[5];
+//   char teamB[] = "b";
+//   sprintf(bufferB, "%s%d", teamB, startnumberB);
+//   sevseg.setChars(bufferB);
+//   sevseg.refreshDisplay();
+// }
 
-void displayTimC()
+// void displayTimC()
+// {
+//   char bufferC[5];
+//   char teamC[] = "c";
+//   sprintf(bufferC, "%s%d", teamC, startnumberC);
+//   sevseg.setChars(bufferC);
+//   sevseg.refreshDisplay();
+// }
+
+void displayTeam(char teamABC[])
 {
-  char bufferC[5];
-  char teamC[] = "c";
-  sprintf(bufferC, "%s%d", teamC, startnumberC);
-  sevseg.setChars(bufferC);
-  sevseg.refreshDisplay();
+  if (teamABC == "A")
+  {
+    char buffer[5];
+    char teamA[] = "a";
+    sprintf(buffer, "%s%d", teamA, startnumberA);
+    sevseg.setChars(buffer);
+    sevseg.refreshDisplay();
+  }
+  else if (teamABC == "B")
+  {
+    char bufferB[5];
+    char teamB[] = "b";
+    sprintf(bufferB, "%s%d", teamB, startnumberB);
+    sevseg.setChars(bufferB);
+    sevseg.refreshDisplay();
+  }
+  else if (teamABC == "C")
+  {
+    char bufferC[5];
+    char teamC[] = "c";
+    sprintf(bufferC, "%s%d", teamC, startnumberC);
+    sevseg.setChars(bufferC);
+    sevseg.refreshDisplay();
+  }
 }
 
 const unsigned long eventInterval = 1000;
@@ -210,6 +238,7 @@ void loop()
     timB_State = false;
     while (timA_State == true)
     {
+      displayTeam("A");
       Serial.println("A");
       if (digitalRead(buttonB) == pressed)
       {
@@ -220,7 +249,6 @@ void loop()
         }
         break;
       }
-      displayTimA();
     }
     while (digitalRead(button) == pressed)
     {
@@ -233,6 +261,7 @@ void loop()
     timA_State = false;
     while (timB_State == true)
     {
+      displayTeam("B");
       Serial.println("B");
       if (digitalRead(button) == pressed)
       {
@@ -242,7 +271,6 @@ void loop()
           // do nothing
         }
       }
-      displayTimB();
     }
     while (digitalRead(buttonB) == pressed)
     {
