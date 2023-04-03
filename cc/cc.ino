@@ -1,7 +1,3 @@
-// - need millis() to work
-// - need to simplify displayTim() and juriNambah()
-
-
 #include <SevSeg.h>
 
 SevSeg sevseg;
