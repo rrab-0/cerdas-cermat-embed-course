@@ -37,22 +37,35 @@ void standBy()
   sevseg.refreshDisplay();
 }
 
-void juriNambah(int score)
+void juriNambah(int tim)
 {
+  int initialScore = 0;
   // +2 until score is 100
-  if (score < 100)
+  if (initialScore < 100)
   {
-    sevseg.setNumber(score);
+    sevseg.setNumber(initialScore);
     sevseg.refreshDisplay();
-    score += 2;
+    initialScore += 2;
   }
-  // reset score if score = 100
-  if (score == 100)
+  // reset initialScore if initialScore = 100
+  if (initialScore == 100)
   {
-    score = 0;
+    initialScore = 0;
   }
-  Serial.println(score);
-  return score;
+
+  // check which team juri is adding
+  if (tim == 1)
+  {
+    startnumberA += initialScore;
+  }
+  else if (tim == 2)
+  {
+    startnumberB += initialScore;
+  }
+  else if (tim == 3)
+  {
+    startnumberC += initialScore;
+  }
 }
 
 void juriNambahKurangA(int mathA)
