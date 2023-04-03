@@ -2,7 +2,7 @@
 
 SevSeg sevseg;
 
-// basically the score of team
+// basically the score of each team
 int startnumberA = 0;
 int startnumberB = 100;
 int startnumberC = 100;
@@ -31,7 +31,8 @@ void setup()
 {
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
-  // put your setup code here, to run once:
+
+  // setup for SevSeg.h
   byte numDigits = 3;
   byte digitPins[] = {4, 3, 2};
   byte segmentPins[] = {7, 8, 9, 10, 11, 12, 13};
@@ -48,10 +49,27 @@ void standBy()
 {
   sevseg.setChars("abc");
   sevseg.refreshDisplay();
+
+  if (a == pressed)
+  {
+    bool buttonApressed = true;
+    displayTimA();
+  }
+  if (b == pressed)
+  {
+    bool buttonBpressed = true;
+    displayTimB();
+  }
+  if (c == pressed)
+  {
+    bool buttonCpressed = true;
+    displayTimC();
+  }
 }
 
 void juriNambah(int score)
 {
+
   // +2 until score is 100
   if (score < 100)
   {
@@ -68,7 +86,7 @@ void juriNambah(int score)
   return score;
 }
 
-void juriNambahA()
+/*void juriNambahA()
 {
   if (startnumberA < 100)
   {
@@ -129,7 +147,7 @@ void juriNgurangC()
   // sevseg.setNumber(startnumberC);
   // sevseg.refreshDisplay();
   startnumberC -= 2;
-}
+}*/
 
 // displays team and the current score they have
 void displayTimA()
@@ -139,6 +157,20 @@ void displayTimA()
   sprintf(buffer, "%s%d", teamA, startnumberA);
   sevseg.setChars(buffer);
   sevseg.refreshDisplay();
+
+  /*  if (+ == pressed)
+    {
+      skor nambah
+      if (standby = pressed)
+      {
+        standBy();
+      }
+    }
+    if (- == pressed)
+    {
+      skor ngurang
+      char teamA[] = "x";
+    }*/
 }
 
 void displayTimB()
@@ -166,21 +198,18 @@ void loop()
 {
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
-  // standBy();
-  displayTimA();
+  standBy();
   // if pressed would do +2
   if (state == pressed)
   {
     juriNambahA();
+    juriNgurangB();
     Serial.println(startnumberA);
+    Serial.println(startnumberB);
     // Serial.println(score);
-    // juriNambahA();
-    // juriNgurangB();
     while (digitalRead(button) == pressed)
     {
       // do nothing
     }
-    // Serial.println(startnumberA);
-    // Serial.println(startnumberB);
   }
 }
