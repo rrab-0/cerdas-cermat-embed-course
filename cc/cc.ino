@@ -70,6 +70,9 @@ void standBy()
   {
     teamC[0] = "0";
   }
+  // if (jawabanA == false && jawabanB == false && jawabanC == false) {
+  //   teamA[0]
+  // }
   Serial.println(jawabanA);
   Serial.println(jawabanB);
   Serial.println(jawabanC);

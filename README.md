@@ -14,7 +14,7 @@
 - 3 juri buttons does the following :
   - 1. Button one, if answer is correct +2 score then displays score
   - 2. Button two, if answer is not correct -1 score
-    - then displays score for 2 seconds
+    - // then displays score for 2 seconds
     - then goes back to standBy() but only displays team that haven't answered yet ( because one of them answers wrong so its not displayed anymore )
   - 3. Button three, standBy()
     - if pressed once will reset status of all peserta buttons to standBy(). ex : if team A is answering which means display is 'Axx' it will return to 'ABC'.
