@@ -114,7 +114,7 @@ void juriNambah(int tim)
   {
     sevseg.setNumber(initialScore);
     sevseg.refreshDisplay();
-    initialScore += 10;
+    initialScore += 2;
   }
   // reset initialScore if initialScore = 100
   if (initialScore == 100)
@@ -283,7 +283,8 @@ void loop()
       // nambah score kalo bener
       if (digitalRead(buttonTambah) == pressed)
       {
-        if (startnumberA == 100) {
+        if (startnumberA == 100)
+        {
           startnumberA += 0;
         }
         juriNambah(tim);
