@@ -5,13 +5,17 @@ SevSeg sevseg;
 // basically the score of each team
 int startnumberA = 0;
 int startnumberB = 5;
-int startnumberC = 100;
+int startnumberC = 10;
 
 // Input
-int button = A0;
+int buttonA = A0;
 int buttonB = A1;
-int buttonTambah = A1;
-int buttonKurang = A2;
+int buttonC = A2;
+int buttonTambah = A3;
+int buttonKurang = A4;
+int buttonStandBy = A5;
+
+// check for input
 bool pressed = false;
 
 // check if team is wrong
@@ -19,15 +23,19 @@ bool jawabanA = true;
 bool jawabanB = true;
 bool jawabanC = true;
 
-int tim = 0;
-
 void setup()
 {
   Serial.begin(9600);
-  pinMode(button, INPUT_PULLUP);
+  
+  // peserta
+  pinMode(buttonA, INPUT_PULLUP);
   pinMode(buttonB, INPUT_PULLUP);
+  pinMode(buttonC, INPUT_PULLUP);
+
+  // juri
   pinMode(buttonTambah, INPUT_PULLUP);
   pinMode(buttonKurang, INPUT_PULLUP);
+  pinMode(buttonStandBy, INPUT_PULLUP);
 
   // setup for SevSeg.h
   byte numDigits = 3;
@@ -142,29 +150,6 @@ void juriNgurang(int tim)
   }
 }
 
-void juriNambahKurangA(int mathA, int tim)
-{
-  if (mathA == 1)
-  {
-    if (startnumberA < 100)
-    {
-      sevseg.setNumber(startnumberA);
-      sevseg.refreshDisplay();
-      startnumberA += 2;
-    }
-    if (startnumberA == 100)
-    {
-      startnumberA = 0;
-    }
-  }
-  else if (mathA == 2)
-  {
-    sevseg.setNumber(startnumberA);
-    sevseg.refreshDisplay();
-    startnumberA -= 2;
-  }
-}
-
 void displayTeam(char teamABC[])
 {
   if (teamABC == "A")
@@ -198,52 +183,61 @@ unsigned long previousTime = 0;
 
 void loop()
 {
+  unsigned long currentTime = millis();
   bool timA_State = true;
   bool timB_State = true;
-  unsigned long currentTime = millis();
-  bool state = digitalRead(button);
+  bool timC_State = true;
+  bool stateA = digitalRead(buttonA);
   bool stateB = digitalRead(buttonB);
+  bool stateC = digitalRead(buttonC);
   bool statetambah = digitalRead(buttonTambah);
   bool statekurang = digitalRead(buttonKurang);
   // if (standByState == false)
   // {
   //   standBy();
   // }
-  // else if (state == pressed )
+  // else if (stateA == pressed )
   //   {
   //     // displayTimA();
-  //     while (digitalRead(button) == pressed)
+  //     while (digitalRead(buttonA) == pressed)
   //     {
   //       // do nothing
   //     }
   //   }
   int tim = 0;
 
-  if (state == pressed)
+  if (stateA == pressed)
   {
     tim = 1;
     timB_State = false;
+    timC_State = false;
     while (timA_State == true)
     {
       displayTeam("A");
       Serial.println("A");
 
-      // // nambah score kalo bener
-      // if (digitalRead(buttonTambah) == pressed)
-      // {
-
-      //   juriNambah(tim);
-      // }
-
-      // // ngurang score kalo salah, and goes to standby
-      // // here, standby displays only teams that havent answered
-      // else if (digitalRead(buttonKurang) == pressed)
-      // {
-      //   jawabanA = false;
-      //   tim = 1;
-      //   juriNgurang(tim);
-      //   // standby();
-      // }
+      // nambah score kalo bener
+      if (digitalRead(buttonTambah) == pressed)
+      {
+        juriNambah(tim);
+        while (digitalRead(buttonTambah) == pressed)
+        {
+          // do nothing
+        }
+      }
+      // ngurang score kalo salah, and goes to standby
+      // here, standby displays only teams that havent answered
+      else if (digitalRead(buttonKurang) == pressed)
+      {
+        jawabanA = false;
+        tim = 1;
+        juriNgurang(tim);
+        while (digitalRead(buttonKurang) == pressed)
+        {
+          // do nothing
+        }
+        // standby();
+      }
 
       if (digitalRead(buttonB) == pressed)
       {
@@ -253,8 +247,16 @@ void loop()
           // do nothing
         }
       }
+      else if (digitalRead(buttonC) == pressed)
+      {
+        timA_State = false;
+        while (digitalRead(buttonB) == pressed)
+        {
+          // do nothing
+        }
+      }
     }
-    while (digitalRead(button) == pressed)
+    while (digitalRead(buttonA) == pressed)
     {
       // do nothing
     }
@@ -264,35 +266,105 @@ void loop()
   {
     tim = 2;
     timA_State = false;
+    timC_State = false;
     while (timB_State == true)
     {
       displayTeam("B");
       Serial.println("B");
 
       // nambah score kalo bener
-      // if (digitalRead(buttonTambah) == pressed)
-      // {
-      //   juriNambah(tim);
-      // }
+      if (digitalRead(buttonTambah) == pressed)
+      {
+        juriNambah(tim);
+        while (digitalRead(buttonTambah) == pressed)
+        {
+          // do nothing
+        }
+      }
+      // ngurang score kalo salah, and goes to standby
+      // here, standby displays only teams that havent answered
+      else if (digitalRead(buttonKurang) == pressed)
+      {
+        juriNgurang(tim);
+        // standby();
+        while (digitalRead(buttonKurang) == pressed)
+        {
+          // do nothing
+        }
+      }
 
-      // // ngurang score kalo salah, and goes to standby
-      // // here, standby displays only teams that havent answered
-      // else if (digitalRead(buttonKurang) == pressed)
-      // {
-      //   juriNgurang(tim);
-      //   // standby();
-      // }
-
-      if (digitalRead(button) == pressed)
+      if (digitalRead(buttonA) == pressed)
       {
         timB_State = false;
-        while (digitalRead(button) == pressed)
+        while (digitalRead(buttonA) == pressed)
+        {
+          // do nothing
+        }
+      }
+      else if (digitalRead(buttonC) == pressed)
+      {
+        timB_State = false;
+        while (digitalRead(buttonA) == pressed)
         {
           // do nothing
         }
       }
     }
     while (digitalRead(buttonB) == pressed)
+    {
+      // do nothing
+    }
+  }
+
+   if (stateC == pressed)
+  {
+    tim = 3;
+    timA_State = false;
+    timB_State = false;
+    while (timC_State == true)
+    {
+      displayTeam("C");
+      Serial.println("C");
+
+      // nambah score kalo bener
+      if (digitalRead(buttonTambah) == pressed)
+      {
+        juriNambah(tim);
+        while (digitalRead(buttonTambah) == pressed)
+        {
+          // do nothing
+        }
+      }
+      // ngurang score kalo salah, and goes to standby
+      // here, standby displays only teams that havent answered
+      else if (digitalRead(buttonKurang) == pressed)
+      {
+        juriNgurang(tim);
+        // standby();
+        while (digitalRead(buttonKurang) == pressed)
+        {
+          // do nothing
+        }
+      }
+
+      if (digitalRead(buttonA) == pressed)
+      {
+        timC_State = false;
+        while (digitalRead(buttonA) == pressed)
+        {
+          // do nothing
+        }
+      }
+      else if (digitalRead(buttonB) == pressed)
+      {
+        timC_State = false;
+        while (digitalRead(buttonB) == pressed)
+        {
+          // do nothing
+        }
+      }
+    }
+    while (digitalRead(buttonC) == pressed)
     {
       // do nothing
     }
