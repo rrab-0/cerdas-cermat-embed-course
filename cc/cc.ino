@@ -70,6 +70,16 @@ void standBy()
   {
     teamC[0] = "0";
   }
+  if (digitalRead(buttonStandBy) == pressed && jawabanA == false && jawabanB == false && jawabanC == false)
+  {
+    jawabanA = true;
+    jawabanB = true;
+    jawabanC = true;
+    while (digitalRead(buttonStandBy) == pressed)
+    {
+      // do nothing
+    }
+  }
   Serial.println(jawabanA);
   Serial.println(jawabanB);
   Serial.println(jawabanC);
@@ -135,7 +145,7 @@ void juriNgurang(int tim)
   {
     sevseg.setNumber(initialScore);
     sevseg.refreshDisplay();
-    initialScore += 2; // ubah jadi -= 1
+    initialScore += 1; // ubah jadi -= 1
   }
   // reset initialScore if initialScore = 100
   if (initialScore == 0)
@@ -224,16 +234,6 @@ void loop()
       // delay 2 sec
       displayTeam("C");
       // delay 2 sec
-      while (digitalRead(buttonStandBy) == pressed)
-      {
-        // do nothing
-      }
-    }
-    if (digitalRead(buttonStandBy) == pressed && jawabanA == false && jawabanB == false && jawabanC == false)
-    {
-      jawabanA = true;
-      jawabanB = true;
-      jawabanC = true;
       while (digitalRead(buttonStandBy) == pressed)
       {
         // do nothing
