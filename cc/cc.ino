@@ -25,6 +25,8 @@ bool jawabanA = true;
 bool jawabanB = true;
 bool jawabanC = true;
 
+unsigned long timeBegin = 0;
+
 void setup()
 {
   Serial.begin(9600);
@@ -80,9 +82,9 @@ void standBy()
       // do nothing
     }
   }
-  Serial.println(jawabanA);
-  Serial.println(jawabanB);
-  Serial.println(jawabanC);
+  // Serial.println(jawabanA);
+  // Serial.println(jawabanB);
+  // Serial.println(jawabanC);
   sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
   sevseg.setChars(bufferStandBy);
   sevseg.refreshDisplay();
@@ -105,9 +107,9 @@ void displaysTeamsScores2Sec()
 
 void juriNambah(int tim)
 {
-  jawabanA = true;
-  jawabanB = true;
-  jawabanC = true;
+  // jawabanA = true;
+  // jawabanB = true;
+  // jawabanC = true;
   int initialScore = 0;
   // +2 until score is 100
   if (initialScore < 100)
@@ -195,12 +197,12 @@ void displayTeam(char teamABC[])
   }
 }
 
-const unsigned long eventInterval = 1000;
-unsigned long previousTime = 0;
+// const unsigned long eventInterval = 1000;
+// unsigned long previousTime = 0;
+unsigned long preMillis = 0;
 
 void loop()
 {
-  unsigned long currentTime = millis();
   bool timA_State = true;
   bool timB_State = true;
   bool timC_State = true;
@@ -213,62 +215,6 @@ void loop()
   bool stateStandBy = digitalRead(buttonStandBy);
 
   standBy();
-  if (stateStandBy == pressed)
-  {
-    tim = 0;
-    timA_State = true;
-    timB_State = true;
-    timC_State = true;
-
-    while (standby_State == true)
-    {
-      return;
-    }
-
-    if (digitalRead(buttonStandBy) == pressed)
-    {
-      displayTeam("A");
-      // delay 2 sec
-      displayTeam("B");
-      // delay 2 sec
-      displayTeam("C");
-      // delay 2 sec
-      while (digitalRead(buttonStandBy) == pressed)
-      {
-        // do nothing
-      }
-    }
-
-    if (digitalRead(buttonA) == pressed)
-    {
-      standby_State = false;
-      while (digitalRead(buttonA) == pressed)
-      {
-        // do nothing
-      }
-    }
-    else if (digitalRead(buttonB) == pressed)
-    {
-      standby_State = false;
-      while (digitalRead(buttonB) == pressed)
-      {
-        //  do nothing
-      }
-    }
-    else if (digitalRead(buttonC) == pressed)
-    {
-      standby_State = false;
-      while (digitalRead(buttonC) == pressed)
-      {
-        // do nothing
-      }
-    }
-
-    while (digitalRead(buttonStandBy) == pressed)
-    {
-      // do nothing
-    }
-  }
 
   if (stateA == pressed)
   {
@@ -411,6 +357,93 @@ void loop()
       }
     }
     while (digitalRead(buttonC) == pressed)
+    {
+      // do nothing
+    }
+  }
+
+  if (stateStandBy == pressed)
+  {
+    tim = 0;
+    timA_State = true;
+    timB_State = true;
+    timC_State = true;
+
+    if (stateStandBy == pressed)
+    {
+      unsigned long timeNow = millis();
+      if (timeNow - timeBegin >= 8000)
+      {
+
+        standby_State = false;
+        Serial.println("Standby 2 push");
+        displayTeam("A");
+        delay(1000);
+        displayTeam("B");
+        delay(1000);
+        displayTeam("C");
+        delay(1000);
+        standby_State = true;
+        delay 2 sec while (digitalRead(buttonStandBy) == pressed)
+        {
+          // do nothing
+        }
+        timeBegin = timeNow;
+      }
+    }
+
+    // unsigned long ms = millis();
+    // if (stateStandBy == pressed)
+    // {
+    //   Serial.println("hello");
+    //   if ((ms - preMillis) >= 3000)
+    //   {
+    //     Serial.println("timer");
+    //     preMillis = ms;
+    //     while (preMillis == ms) {}
+    //     if (timA_State == true)
+    //     {
+    //       displayTeam("A");
+    //     }
+    //   }
+    //   while (digitalRead(buttonStandBy) == pressed)
+    //   {
+
+    //     // do nothing
+    //   }
+    // }
+
+    while (standby_State == true)
+    {
+      return;
+    }
+
+    if (digitalRead(buttonA) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonA) == pressed)
+      {
+        // do nothing
+      }
+    }
+    else if (digitalRead(buttonB) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonB) == pressed)
+      {
+        //  do nothing
+      }
+    }
+    else if (digitalRead(buttonC) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonC) == pressed)
+      {
+        // do nothing
+      }
+    }
+
+    while (digitalRead(buttonStandBy) == pressed)
     {
       // do nothing
     }
