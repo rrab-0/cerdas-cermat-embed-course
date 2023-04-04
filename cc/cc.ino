@@ -26,7 +26,7 @@ bool jawabanC = true;
 void setup()
 {
   Serial.begin(9600);
-  
+
   // peserta
   pinMode(buttonA, INPUT_PULLUP);
   pinMode(buttonB, INPUT_PULLUP);
@@ -230,7 +230,7 @@ void loop()
       else if (digitalRead(buttonKurang) == pressed)
       {
         jawabanA = false;
-        tim = 1;
+        // tim = 1;
         juriNgurang(tim);
         while (digitalRead(buttonKurang) == pressed)
         {
@@ -250,7 +250,7 @@ void loop()
       else if (digitalRead(buttonC) == pressed)
       {
         timA_State = false;
-        while (digitalRead(buttonB) == pressed)
+        while (digitalRead(buttonC) == pressed)
         {
           // do nothing
         }
@@ -304,7 +304,7 @@ void loop()
       else if (digitalRead(buttonC) == pressed)
       {
         timB_State = false;
-        while (digitalRead(buttonA) == pressed)
+        while (digitalRead(buttonC) == pressed)
         {
           // do nothing
         }
@@ -316,7 +316,7 @@ void loop()
     }
   }
 
-   if (stateC == pressed)
+  if (stateC == pressed)
   {
     tim = 3;
     timA_State = false;
