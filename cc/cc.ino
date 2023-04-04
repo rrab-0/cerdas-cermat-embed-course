@@ -54,28 +54,28 @@ void setup()
 
 void standBy()
 {
-
-    char bufferStandBy[5];
-    char teamA = "a";
-    char teamB = "b";
-    char teamC = "c";
-    if (jawabanA == false)
-    {
-      teamA = "0";
-    }
-    if (jawabanB == false)
-    {
-      teamB = "0";
-    }
-    if (jawabanC == false)
-    {
-      teamC = "0";
-    }
-    sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
-    sevseg.setChars(bufferStandBy);
-    sevseg.refreshDisplay();
-  
-
+  char bufferStandBy[10];
+  char teamA[] = "a";
+  char teamB[] = "b";
+  char teamC[] = "c";
+  if (jawabanA == false)
+  {
+    teamA[0] = "0";
+  }
+  if (jawabanB == false)
+  {
+    teamB[0] = "0";
+  }
+  if (jawabanC == false)
+  {
+    teamC[0] = "0";
+  }
+  Serial.println(jawabanA);
+  Serial.println(jawabanB);
+  Serial.println(jawabanC);
+  sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
+  sevseg.setChars(bufferStandBy);
+  sevseg.refreshDisplay();
 }
 
 void displaysTeamsScores2Sec()
@@ -95,6 +95,9 @@ void displaysTeamsScores2Sec()
 
 void juriNambah(int tim)
 {
+  jawabanA = true;
+  jawabanB = true;
+  jawabanC = true;
   int initialScore = 0;
   // +2 until score is 100
   if (initialScore < 100)
@@ -211,7 +214,7 @@ void loop()
   //       // do nothing
   //     }
   //   }
-  //standBy();
+  standBy();
   if (stateStandBy == pressed)
   {
     tim = 0;
