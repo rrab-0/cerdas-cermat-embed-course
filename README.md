@@ -20,7 +20,7 @@
   - 3. Button three, standBy()
     - if pressed once will reset status of all peserta buttons to standBy(). ex : if team A is answering which means display is 'Axx' it will return to 'ABC'.
     - if pressed again after pressing once, will diplay current scores of teams
-      - (need to do this) diplays current scores of each team for 2 secs then goes back to standBy() or teams that have a right to answer a question.
+      - //(need to do this) diplays current scores of each team for 2 secs then goes back to standBy() or teams that have a right to answer a question.
 
 # How the game works,
 

@@ -90,6 +90,29 @@ void standBy()
   sevseg.refreshDisplay();
 }
 
+void standBy2(int tim)
+{
+  char bufferStandBy[10];
+  char teamA[] = "a";
+  char teamB[] = "b";
+  char teamC[] = "c";
+  if (tim == 1){
+    sprintf(bufferStandBy, "%s%s", teamB, teamC );
+  sevseg.setChars(bufferStandBy);
+  sevseg.refreshDisplay();
+  }
+  else if (tim == 2){
+    sprintf(bufferStandBy, "%s%s", teamA,teamC );
+  sevseg.setChars(bufferStandBy);
+  sevseg.refreshDisplay();
+  }
+  else if (tim == 3){
+    sprintf(bufferStandBy, "%s%s", teamA,teamB );
+  sevseg.setChars(bufferStandBy);
+  sevseg.refreshDisplay();
+  }
+}
+
 void displaysTeamsScores2Sec()
 {
   // put this something bool in loop
@@ -167,6 +190,7 @@ void juriNgurang(int tim)
   {
     startnumberC -= initialScore;
   }
+  
 }
 
 void displayTeam(char teamABC[])
@@ -372,46 +396,29 @@ void loop()
     if (stateStandBy == pressed)
     {
       unsigned long timeNow = millis();
-      if (timeNow - timeBegin >= 8000)
+      if (timeNow - timeBegin >= 2000)
       {
 
         standby_State = false;
         Serial.println("Standby 2 push");
-        displayTeam("A");
-        delay(1000);
-        displayTeam("B");
-        delay(1000);
-        displayTeam("C");
-        delay(1000);
+        for (int i=0; i<=400; i++){
+          displayTeam("A");
+        }
+        for (int i=0; i<=400; i++){
+          displayTeam("B");
+        }
+        for (int i=0; i<=400; i++){
+          displayTeam("C");
+        }
         standby_State = true;
-        delay 2 sec while (digitalRead(buttonStandBy) == pressed)
+        // delay 2 sec 
+        while (digitalRead(buttonStandBy) == pressed)
         {
           // do nothing
         }
         timeBegin = timeNow;
       }
     }
-
-    // unsigned long ms = millis();
-    // if (stateStandBy == pressed)
-    // {
-    //   Serial.println("hello");
-    //   if ((ms - preMillis) >= 3000)
-    //   {
-    //     Serial.println("timer");
-    //     preMillis = ms;
-    //     while (preMillis == ms) {}
-    //     if (timA_State == true)
-    //     {
-    //       displayTeam("A");
-    //     }
-    //   }
-    //   while (digitalRead(buttonStandBy) == pressed)
-    //   {
-
-    //     // do nothing
-    //   }
-    // }
 
     while (standby_State == true)
     {
