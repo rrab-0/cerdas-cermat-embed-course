@@ -4,8 +4,8 @@ SevSeg sevseg;
 
 // basically the score of each team
 int startnumberA = 0;
-int startnumberB = 5;
-int startnumberC = 10;
+int startnumberB = 0;
+int startnumberC = 0;
 
 int tim = 0;
 
@@ -114,14 +114,13 @@ void juriNambah(int tim)
   {
     sevseg.setNumber(initialScore);
     sevseg.refreshDisplay();
-    initialScore += 2;
+    initialScore += 10;
   }
   // reset initialScore if initialScore = 100
   if (initialScore == 100)
   {
     initialScore = 0;
   }
-
   // check which team juri is adding
   if (tim == 1)
   {
@@ -284,6 +283,9 @@ void loop()
       // nambah score kalo bener
       if (digitalRead(buttonTambah) == pressed)
       {
+        if (startnumberA == 100) {
+          startnumberA += 0;
+        }
         juriNambah(tim);
         while (digitalRead(buttonTambah) == pressed)
         {
