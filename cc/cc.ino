@@ -8,8 +8,8 @@ int startnumberB = 5;
 int startnumberC = 100;
 
 // Input
-int button = A5;
-int buttonB = A0;
+int button = A0;
+int buttonB = A1;
 int buttonTambah = A1;
 int buttonKurang = A2;
 bool pressed = false;
@@ -45,20 +45,20 @@ void setup()
 void standBy()
 {
   char bufferStandBy[5];
-  char teamA[] = "a";
-  char teamB[] = "b";
-  char teamC[] = "c";
+  char teamA = "a";
+  char teamB = "b";
+  char teamC = "c";
   if (jawabanA == false)
   {
-    teamA[] = "0";
+    teamA = "0";
   }
   if (jawabanB == false)
   {
-    teamB[] = "0";
+    teamB = "0";
   }
   if (jawabanC == false)
   {
-    teamC[] = "0";
+    teamC = "0";
   }
   sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
   sevseg.setChars(bufferStandBy);
