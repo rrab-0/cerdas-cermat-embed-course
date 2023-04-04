@@ -90,49 +90,11 @@ void standBy()
   sevseg.refreshDisplay();
 }
 
-void standBy2(int tim)
-{
-  char bufferStandBy[10];
-  char teamA[] = "a";
-  char teamB[] = "b";
-  char teamC[] = "c";
-  if (tim == 1){
-    sprintf(bufferStandBy, "%s%s", teamB, teamC );
-  sevseg.setChars(bufferStandBy);
-  sevseg.refreshDisplay();
-  }
-  else if (tim == 2){
-    sprintf(bufferStandBy, "%s%s", teamA,teamC );
-  sevseg.setChars(bufferStandBy);
-  sevseg.refreshDisplay();
-  }
-  else if (tim == 3){
-    sprintf(bufferStandBy, "%s%s", teamA,teamB );
-  sevseg.setChars(bufferStandBy);
-  sevseg.refreshDisplay();
-  }
-}
-
-void displaysTeamsScores2Sec()
-{
-  // put this something bool in loop
-  bool something = true;
-  while (something == true)
-  {
-    displayTeam("A");
-    // 2 sec delay
-    displayTeam("B");
-    // 2 sec delay
-    displayTeam("C");
-    // 2 sec delay
-  }
-}
-
 void juriNambah(int tim)
 {
-  // jawabanA = true;
-  // jawabanB = true;
-  // jawabanC = true;
+  jawabanA = true;
+  jawabanB = true;
+  jawabanC = true;
   int initialScore = 0;
   // +2 until score is 100
   if (initialScore < 100)
@@ -190,7 +152,6 @@ void juriNgurang(int tim)
   {
     startnumberC -= initialScore;
   }
-  
 }
 
 void displayTeam(char teamABC[])
@@ -401,17 +362,20 @@ void loop()
 
         standby_State = false;
         Serial.println("Standby 2 push");
-        for (int i=0; i<=400; i++){
+        for (int i = 0; i <= 400; i++)
+        {
           displayTeam("A");
         }
-        for (int i=0; i<=400; i++){
+        for (int i = 0; i <= 400; i++)
+        {
           displayTeam("B");
         }
-        for (int i=0; i<=400; i++){
+        for (int i = 0; i <= 400; i++)
+        {
           displayTeam("C");
         }
         standby_State = true;
-        // delay 2 sec 
+        // delay 2 sec
         while (digitalRead(buttonStandBy) == pressed)
         {
           // do nothing
