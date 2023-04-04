@@ -329,6 +329,7 @@ void loop()
       // here, standby displays only teams that havent answered
       else if (digitalRead(buttonKurang) == pressed)
       {
+        jawabanB = false;
         juriNgurang(tim);
         // standby();
         while (digitalRead(buttonKurang) == pressed)
@@ -375,6 +376,7 @@ void loop()
       // here, standby displays only teams that havent answered
       else if (digitalRead(buttonKurang) == pressed)
       {
+        jawabanC = false;
         juriNgurang(tim);
         // standby();
         while (digitalRead(buttonKurang) == pressed)
