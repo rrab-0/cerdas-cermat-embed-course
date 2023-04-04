@@ -135,7 +135,7 @@ void juriNgurang(int tim)
   {
     sevseg.setNumber(initialScore);
     sevseg.refreshDisplay();
-    initialScore += 2;
+    initialScore += 2; // ubah jadi -= 1
   }
   // reset initialScore if initialScore = 100
   if (initialScore == 0)
@@ -202,18 +202,7 @@ void loop()
   bool stateTambah = digitalRead(buttonTambah);
   bool stateKurang = digitalRead(buttonKurang);
   bool stateStandBy = digitalRead(buttonStandBy);
-  // if (standByState == false)
-  // {
-  //   standBy();
-  // }
-  // else if (stateA == pressed )
-  //   {
-  //     // displayTimA();
-  //     while (digitalRead(buttonA) == pressed)
-  //     {
-  //       // do nothing
-  //     }
-  //   }
+
   standBy();
   if (stateStandBy == pressed)
   {
@@ -221,6 +210,11 @@ void loop()
     timA_State = true;
     timB_State = true;
     timC_State = true;
+
+    while (standby_State == true)
+    {
+      return;
+    }
 
     if (digitalRead(buttonStandBy) == pressed)
     {
@@ -235,7 +229,7 @@ void loop()
         // do nothing
       }
     }
-    if (digitalRead(buttonStandBy) == pressed &&jawabanA == false &&jawabanB == false &&jawabanC = false)
+    if (digitalRead(buttonStandBy) == pressed && jawabanA == false && jawabanB == false && jawabanC == false)
     {
       jawabanA = true;
       jawabanB = true;
@@ -244,11 +238,6 @@ void loop()
       {
         // do nothing
       }
-    }
-
-    while (standby_State == true)
-    {
-      return;
     }
 
     if (digitalRead(buttonA) == pressed)
@@ -353,6 +342,7 @@ void loop()
       // here, standby displays only teams that havent answered
       else if (digitalRead(buttonKurang) == pressed)
       {
+        jawabanB = false;
         juriNgurang(tim);
         // standby();
         while (digitalRead(buttonKurang) == pressed)
@@ -399,6 +389,7 @@ void loop()
       // here, standby displays only teams that havent answered
       else if (digitalRead(buttonKurang) == pressed)
       {
+        jawabanC = false;
         juriNgurang(tim);
         // standby();
         while (digitalRead(buttonKurang) == pressed)
