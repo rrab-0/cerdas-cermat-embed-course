@@ -187,11 +187,13 @@ void loop()
   bool timA_State = true;
   bool timB_State = true;
   bool timC_State = true;
+  bool standby_State = true;
   bool stateA = digitalRead(buttonA);
   bool stateB = digitalRead(buttonB);
   bool stateC = digitalRead(buttonC);
-  bool statetambah = digitalRead(buttonTambah);
-  bool statekurang = digitalRead(buttonKurang);
+  bool stateTambah = digitalRead(buttonTambah);
+  bool stateKurang = digitalRead(buttonKurang);
+  bool stateStandBy = digitalRead(buttonStandBy);
   // if (standByState == false)
   // {
   //   standBy();
@@ -205,6 +207,49 @@ void loop()
   //     }
   //   }
   int tim = 0;
+
+  if (stateStandBy == pressed)
+  {
+    tim = 0;
+    timA_State = true;
+    timB_State = true;
+    timC_State = true;
+
+    while (standby_State == true)
+    {
+      standBy();
+    }
+
+    if (digitalRead(buttonA) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonA) == pressed)
+      {
+        // do nothing
+      }
+    }
+    else if (digitalRead(buttonB) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonB) == pressed)
+      {
+        //  do nothing
+      }
+    }
+    else if (digitalRead(buttonC) == pressed)
+    {
+      standby_State = false;
+      while (digitalRead(buttonC) == pressed)
+      {
+        // do nothing
+      }
+    }
+
+    while (digitalRead(buttonStandBy) == pressed)
+    {
+      // do nothing
+    }
+  }
 
   if (stateA == pressed)
   {
@@ -239,18 +284,26 @@ void loop()
         // standby();
       }
 
-      if (digitalRead(buttonB) == pressed)
+      // if (digitalRead(buttonB) == pressed)
+      // {
+      //   timA_State = false;
+      //   while (digitalRead(buttonB) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      // else if (digitalRead(buttonC) == pressed)
+      // {
+      //   timA_State = false;
+      //   while (digitalRead(buttonC) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      if (digitalRead(buttonStandBy) == pressed)
       {
         timA_State = false;
-        while (digitalRead(buttonB) == pressed)
-        {
-          // do nothing
-        }
-      }
-      else if (digitalRead(buttonC) == pressed)
-      {
-        timA_State = false;
-        while (digitalRead(buttonC) == pressed)
+        while (digitalRead(buttonStandBy) == pressed)
         {
           // do nothing
         }
@@ -293,18 +346,26 @@ void loop()
         }
       }
 
-      if (digitalRead(buttonA) == pressed)
+      // if (digitalRead(buttonA) == pressed)
+      // {
+      //   timB_State = false;
+      //   while (digitalRead(buttonA) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      // else if (digitalRead(buttonC) == pressed)
+      // {
+      //   timB_State = false;
+      //   while (digitalRead(buttonC) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      if (digitalRead(buttonStandBy) == pressed)
       {
         timB_State = false;
-        while (digitalRead(buttonA) == pressed)
-        {
-          // do nothing
-        }
-      }
-      else if (digitalRead(buttonC) == pressed)
-      {
-        timB_State = false;
-        while (digitalRead(buttonC) == pressed)
+        while (digitalRead(buttonStandBy) == pressed)
         {
           // do nothing
         }
@@ -347,18 +408,26 @@ void loop()
         }
       }
 
-      if (digitalRead(buttonA) == pressed)
+      // if (digitalRead(buttonA) == pressed)
+      // {
+      //   timC_State = false;
+      //   while (digitalRead(buttonA) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      // else if (digitalRead(buttonB) == pressed)
+      // {
+      //   timC_State = false;
+      //   while (digitalRead(buttonB) == pressed)
+      //   {
+      //     // do nothing
+      //   }
+      // }
+      if (digitalRead(buttonStandBy) == pressed)
       {
         timC_State = false;
-        while (digitalRead(buttonA) == pressed)
-        {
-          // do nothing
-        }
-      }
-      else if (digitalRead(buttonB) == pressed)
-      {
-        timC_State = false;
-        while (digitalRead(buttonB) == pressed)
+        while (digitalRead(buttonStandBy) == pressed)
         {
           // do nothing
         }
