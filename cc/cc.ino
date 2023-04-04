@@ -222,6 +222,30 @@ void loop()
     timB_State = true;
     timC_State = true;
 
+    if (digitalRead(buttonStandBy) == pressed)
+    {
+      displayTeam("A");
+      // delay 2 sec
+      displayTeam("B");
+      // delay 2 sec
+      displayTeam("C");
+      // delay 2 sec
+      while (digitalRead(buttonStandBy) == pressed)
+      {
+        // do nothing
+      }
+    }
+    if (digitalRead(buttonStandBy) == pressed &&jawabanA == false &&jawabanB == false &&jawabanC = false)
+    {
+      jawabanA = true;
+      jawabanB = true;
+      jawabanC = true;
+      while (digitalRead(buttonStandBy) == pressed)
+      {
+        // do nothing
+      }
+    }
+
     while (standby_State == true)
     {
       return;
