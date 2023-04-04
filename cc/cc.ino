@@ -10,9 +10,14 @@ int startnumberC = 100;
 // Input
 int button = A5;
 int buttonB = A0;
-int buttontambah = A1;
-int buttonkurang = A2;
+int buttonTambah = A1;
+int buttonKurang = A2;
 bool pressed = false;
+
+// check if team is wrong
+bool jawabanA = true;
+bool jawabanB = true;
+bool jawabanC = true;
 
 int tim = 0;
 
@@ -21,8 +26,8 @@ void setup()
   Serial.begin(9600);
   pinMode(button, INPUT_PULLUP);
   pinMode(buttonB, INPUT_PULLUP);
-  pinMode(buttontambah, INPUT_PULLUP);
-  pinMode(buttonkurang, INPUT_PULLUP);
+  pinMode(buttonTambah, INPUT_PULLUP);
+  pinMode(buttonKurang, INPUT_PULLUP);
 
   // setup for SevSeg.h
   byte numDigits = 3;
@@ -39,7 +44,24 @@ void setup()
 
 void standBy()
 {
-  sevseg.setChars("abc");
+  char bufferStandBy[5];
+  char teamA[] = "a";
+  char teamB[] = "b";
+  char teamC[] = "c";
+  if (jawabanA == false)
+  {
+    teamA[] = "0";
+  }
+  if (jawabanB == false)
+  {
+    teamB[] = "0";
+  }
+  if (jawabanC == false)
+  {
+    teamC[] = "0";
+  }
+  sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
+  sevseg.setChars(bufferStandBy);
   sevseg.refreshDisplay();
 }
 
@@ -181,8 +203,8 @@ void loop()
   unsigned long currentTime = millis();
   bool state = digitalRead(button);
   bool stateB = digitalRead(buttonB);
-  bool statetambah = digitalRead(buttontambah);
-  bool statekurang = digitalRead(buttonkurang);
+  bool statetambah = digitalRead(buttonTambah);
+  bool statekurang = digitalRead(buttonKurang);
   // if (standByState == false)
   // {
   //   standBy();
@@ -207,16 +229,19 @@ void loop()
       Serial.println("A");
 
       // nambah score kalo bener
-      if (statetambah == true)
+      if (digitalRead(buttonTambah) == pressed)
       {
-        juriNambah(int tim);
+
+        juriNambah(tim);
       }
 
       // ngurang score kalo salah, and goes to standby
       // here, standby displays only teams that havent answered
-      else if (statekurang == true)
+      else if (digitalRead(buttonKurang) == pressed)
       {
-        juriNgurang(int tim);
+        jawabanA = false;
+        tim = 1;
+        juriNgurang(tim);
         // standby();
       }
 
@@ -246,16 +271,16 @@ void loop()
       Serial.println("B");
 
       // nambah score kalo bener
-      if (statetambah == true)
+      if (digitalRead(buttonTambah) == pressed)
       {
-        juriNambah(int tim);
+        juriNambah(tim);
       }
 
       // ngurang score kalo salah, and goes to standby
       // here, standby displays only teams that havent answered
-      else if (statekurang == true)
+      else if (digitalRead(buttonKurang) == pressed)
       {
-        juriNgurang(int tim);
+        juriNgurang(tim);
         // standby();
       }
 
