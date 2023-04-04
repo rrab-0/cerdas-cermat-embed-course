@@ -43,6 +43,21 @@ void standBy()
   sevseg.refreshDisplay();
 }
 
+void displaysTeamsScores2Sec()
+{
+  // put this something bool in loop
+  bool something = true;
+  while (something == true)
+  {
+    displayTeam("A");
+    // 2 sec delay
+    displayTeam("B");
+    // 2 sec delay
+    displayTeam("C");
+    // 2 sec delay
+  }
+}
+
 void juriNambah(int tim)
 {
   int initialScore = 0;
@@ -118,108 +133,15 @@ void juriNambahKurangA(int mathA, int tim)
     if (startnumberA == 100)
     {
       startnumberA = 0;
-      }
     }
-    else if (mathA == 2)
-    {
-      sevseg.setNumber(startnumberA);
-      sevseg.refreshDisplay();
-      startnumberA -= 2;
-    }
-  }  
-}  
-  
-
-// void juriNambahA()
-// {
-//   if (startnumberA < 100)
-//   {
-//     sevseg.setNumber(startnumberA);
-//     sevseg.refreshDisplay();
-//     startnumberA += 2;
-//   }
-//   if (startnumberA == 100)
-//   {
-//     startnumberA = 0;
-//   }
-// }
-
-// void juriNgurangA()
-// {
-//   sevseg.setNumber(startnumberA);
-//   sevseg.refreshDisplay();
-//   startnumberA -= 2;
-// }
-
-// void juriNambahB()
-// {
-//   if (startnumberB < 100)
-//   {
-//     sevseg.setNumber(startnumberB);
-//     sevseg.refreshDisplay();
-//     startnumberB += 2;
-//   }
-//   if (startnumberB == 100)
-//   {
-//     startnumberB = 0;
-//   }
-// }
-
-// void juriNgurangB()
-// {
-//   // sevseg.setNumber(startnumberB);
-//   // sevseg.refreshDisplay();
-//   startnumberB -= 2;
-// }
-
-// void juriNambahC()
-// {
-//   if (startnumberC < 100)
-//   {
-//     sevseg.setNumber(startnumberC);
-//     sevseg.refreshDisplay();
-//     startnumberC += 2;
-//   }
-//   if (startnumberC == 100)
-//   {
-//     startnumberC = 0;
-//   }
-// }
-
-// void juriNgurangC()
-// {
-//   // sevseg.setNumber(startnumberC);
-//   // sevseg.refreshDisplay();
-//   startnumberC -= 2;
-// }
-
-// displays team and the current score they have
-// void displayTimA()
-// {
-//   char buffer[5];
-//   char teamA[] = "a";
-//   sprintf(buffer, "%s%d", teamA, startnumberA);
-//   sevseg.setChars(buffer);
-//   sevseg.refreshDisplay();
-// }
-
-// void displayTimB()
-// {
-//   char bufferB[5];
-//   char teamB[] = "b";
-//   sprintf(bufferB, "%s%d", teamB, startnumberB);
-//   sevseg.setChars(bufferB);
-//   sevseg.refreshDisplay();
-// }
-
-// void displayTimC()
-// {
-//   char bufferC[5];
-//   char teamC[] = "c";
-//   sprintf(bufferC, "%s%d", teamC, startnumberC);
-//   sevseg.setChars(bufferC);
-//   sevseg.refreshDisplay();
-// }
+  }
+  else if (mathA == 2)
+  {
+    sevseg.setNumber(startnumberA);
+    sevseg.refreshDisplay();
+    startnumberA -= 2;
+  }
+}
 
 void displayTeam(char teamABC[])
 {
@@ -280,17 +202,22 @@ void loop()
     timB_State = false;
     while (timA_State == true)
     {
-      tim=1;
+      tim = 1;
       displayTeam("A");
       Serial.println("A");
 
-      if(statetambah == true)
+      // nambah score kalo bener
+      if (statetambah == true)
       {
         juriNambah(int tim);
       }
-      else if(statekurang == true)
+
+      // ngurang score kalo salah, and goes to standby
+      // here, standby displays only teams that havent answered
+      else if (statekurang == true)
       {
         juriNgurang(int tim);
+        // standby();
       }
 
       if (digitalRead(buttonB) == pressed)
@@ -311,22 +238,27 @@ void loop()
 
   if (stateB == pressed)
   {
-    tim=2;
+    tim = 2;
     timA_State = false;
     while (timB_State == true)
     {
       displayTeam("B");
       Serial.println("B");
 
-      if(statetambah == true)
+      // nambah score kalo bener
+      if (statetambah == true)
       {
         juriNambah(int tim);
       }
-      else if(statekurang == true)
+
+      // ngurang score kalo salah, and goes to standby
+      // here, standby displays only teams that havent answered
+      else if (statekurang == true)
       {
         juriNgurang(int tim);
+        // standby();
       }
-      
+
       if (digitalRead(button) == pressed)
       {
         timB_State = false;
