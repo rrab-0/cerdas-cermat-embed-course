@@ -7,6 +7,8 @@ int startnumberA = 0;
 int startnumberB = 5;
 int startnumberC = 10;
 
+int tim = 0;
+
 // Input
 int buttonA = A0;
 int buttonB = A1;
@@ -52,25 +54,28 @@ void setup()
 
 void standBy()
 {
-  char bufferStandBy[5];
-  char teamA = "a";
-  char teamB = "b";
-  char teamC = "c";
-  if (jawabanA == false)
-  {
-    teamA = "0";
-  }
-  if (jawabanB == false)
-  {
-    teamB = "0";
-  }
-  if (jawabanC == false)
-  {
-    teamC = "0";
-  }
-  sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
-  sevseg.setChars(bufferStandBy);
-  sevseg.refreshDisplay();
+
+    char bufferStandBy[5];
+    char teamA = "a";
+    char teamB = "b";
+    char teamC = "c";
+    if (jawabanA == false)
+    {
+      teamA = "0";
+    }
+    if (jawabanB == false)
+    {
+      teamB = "0";
+    }
+    if (jawabanC == false)
+    {
+      teamC = "0";
+    }
+    sprintf(bufferStandBy, "%s%s%s", teamA, teamB, teamC);
+    sevseg.setChars(bufferStandBy);
+    sevseg.refreshDisplay();
+  
+
 }
 
 void displaysTeamsScores2Sec()
@@ -206,8 +211,7 @@ void loop()
   //       // do nothing
   //     }
   //   }
-  int tim = 0;
-
+  //standBy();
   if (stateStandBy == pressed)
   {
     tim = 0;
@@ -217,7 +221,7 @@ void loop()
 
     while (standby_State == true)
     {
-      standBy();
+      return;
     }
 
     if (digitalRead(buttonA) == pressed)
@@ -284,22 +288,6 @@ void loop()
         // standby();
       }
 
-      // if (digitalRead(buttonB) == pressed)
-      // {
-      //   timA_State = false;
-      //   while (digitalRead(buttonB) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
-      // else if (digitalRead(buttonC) == pressed)
-      // {
-      //   timA_State = false;
-      //   while (digitalRead(buttonC) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
       if (digitalRead(buttonStandBy) == pressed)
       {
         timA_State = false;
@@ -346,22 +334,6 @@ void loop()
         }
       }
 
-      // if (digitalRead(buttonA) == pressed)
-      // {
-      //   timB_State = false;
-      //   while (digitalRead(buttonA) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
-      // else if (digitalRead(buttonC) == pressed)
-      // {
-      //   timB_State = false;
-      //   while (digitalRead(buttonC) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
       if (digitalRead(buttonStandBy) == pressed)
       {
         timB_State = false;
@@ -408,22 +380,6 @@ void loop()
         }
       }
 
-      // if (digitalRead(buttonA) == pressed)
-      // {
-      //   timC_State = false;
-      //   while (digitalRead(buttonA) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
-      // else if (digitalRead(buttonB) == pressed)
-      // {
-      //   timC_State = false;
-      //   while (digitalRead(buttonB) == pressed)
-      //   {
-      //     // do nothing
-      //   }
-      // }
       if (digitalRead(buttonStandBy) == pressed)
       {
         timC_State = false;
