@@ -221,29 +221,29 @@ void loop()
 
   if (state == pressed)
   {
+    tim = 1;
     timB_State = false;
     while (timA_State == true)
     {
-      tim = 1;
       displayTeam("A");
       Serial.println("A");
 
-      // nambah score kalo bener
-      if (digitalRead(buttonTambah) == pressed)
-      {
+      // // nambah score kalo bener
+      // if (digitalRead(buttonTambah) == pressed)
+      // {
 
-        juriNambah(tim);
-      }
+      //   juriNambah(tim);
+      // }
 
-      // ngurang score kalo salah, and goes to standby
-      // here, standby displays only teams that havent answered
-      else if (digitalRead(buttonKurang) == pressed)
-      {
-        jawabanA = false;
-        tim = 1;
-        juriNgurang(tim);
-        // standby();
-      }
+      // // ngurang score kalo salah, and goes to standby
+      // // here, standby displays only teams that havent answered
+      // else if (digitalRead(buttonKurang) == pressed)
+      // {
+      //   jawabanA = false;
+      //   tim = 1;
+      //   juriNgurang(tim);
+      //   // standby();
+      // }
 
       if (digitalRead(buttonB) == pressed)
       {
@@ -252,7 +252,6 @@ void loop()
         {
           // do nothing
         }
-        break;
       }
     }
     while (digitalRead(button) == pressed)
@@ -271,18 +270,18 @@ void loop()
       Serial.println("B");
 
       // nambah score kalo bener
-      if (digitalRead(buttonTambah) == pressed)
-      {
-        juriNambah(tim);
-      }
+      // if (digitalRead(buttonTambah) == pressed)
+      // {
+      //   juriNambah(tim);
+      // }
 
-      // ngurang score kalo salah, and goes to standby
-      // here, standby displays only teams that havent answered
-      else if (digitalRead(buttonKurang) == pressed)
-      {
-        juriNgurang(tim);
-        // standby();
-      }
+      // // ngurang score kalo salah, and goes to standby
+      // // here, standby displays only teams that havent answered
+      // else if (digitalRead(buttonKurang) == pressed)
+      // {
+      //   juriNgurang(tim);
+      //   // standby();
+      // }
 
       if (digitalRead(button) == pressed)
       {
