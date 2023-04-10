@@ -1,3 +1,3 @@
-# cerdas-cermat system with arduino
+# cerdas-cermat/quiz system with arduino
 
-a one week team-based project consist of 3 people
+A one week team-based project for the course 'Embedded Systems' consists of 3 people
