@@ -1,10 +1,11 @@
 # TODOs ,
 
-- need to check if score is 0 or 100, then ngurang/nambah would be disabled
-- need millis() to work for blinking
-  //- need to simplify displayTim() and juriNambah() for more performance
-  //- need to display team if a team pressed first, could use booleans
-  //- to set only standby button is active, nest the if logics of other buttons inside standby button logic
+todos done
+//- need to check if score is 0 or 100, then ngurang/nambah would be disabled
+//- need millis() to work for blinking
+//- need to simplify displayTim() and juriNambah() for more performance
+//- need to display team if a team pressed first, could use booleans
+//- to set only standby button is active, nest the if logics of other buttons inside standby button logic
 
 # What i need to make ,
 

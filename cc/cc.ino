@@ -43,7 +43,7 @@ void setup()
 
   // setup for SevSeg.h
   byte numDigits = 3;
-  byte digitPins[] = {4, 3, 2};
+  byte digitPins[] = {2, 3, 4};
   byte segmentPins[] = {7, 8, 9, 10, 11, 12, 13};
   bool resistorsOnSegments = true;
   byte hardwareConfig = COMMON_CATHODE;
@@ -416,6 +416,7 @@ void loop()
 
     while (digitalRead(buttonStandBy) == pressed)
     {
+      Serial.println("STAND-BY");
       // do nothing
     }
   }
