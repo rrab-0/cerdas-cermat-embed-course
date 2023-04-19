@@ -1,6 +1,10 @@
 # cerdas-cermat/quiz system with arduino
 
-A one week team-based project for the course 'Embedded Systems' consists of 3 people
+A one week team-based project for the course 'Embedded Systems' consists of 3 people. 
+
+I'm responsible for :
+- Developing the prototype in tinkercad and breadboard
+- Designing and developing the software that powers the system
 
 Components used :
 
