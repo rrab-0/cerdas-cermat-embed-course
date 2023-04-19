@@ -4,7 +4,7 @@ A one week team-based project for the course 'Embedded Systems' consists of 3 pe
 
 I'm responsible for :
 - Developing the prototype in tinkercad and breadboard
-- Designing and developing the software that powers the system
+- Developing the software that powers the system
 
 Components used :
 
