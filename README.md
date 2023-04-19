@@ -28,7 +28,7 @@ PCB version :
 
 How it works :
 
-- There is 3 teams A/B/C and a "judge" to add/subtract score and also diplays all team's current score
+- There is 3 teams A/B/C (yellow button) and a "judge" (red button) to add/subtract score and also diplays all team's current score
 - The yellow buttons are to show score of team A or B or C (from left to right)
   - ex: if A is pressed would output A00 which means its A teams time to answer the 'quiz' question and that they have the score of 0
 - The red buttons are for the "judge"
